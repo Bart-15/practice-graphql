@@ -25,16 +25,32 @@ export const GameMutation = {
   },
 
   addGame(_parent, args) {
-    const { title, platform } = args.game;
     let game = {
-      title,
-      platform,
+      ...args.game,
       id: Math.floor(Math.random() * 1000).toString(),
     };
 
-    console.log(game);
     db.games.push(game);
 
     return game;
+  },
+
+  updateGame(_parent, { id, edits }) {
+    let game = db.games.find((game) => game.id === id);
+    if (!game) {
+      throw new Error("Game not found");
+    }
+
+    db.games = db.games.map((game) => {
+      if (game.id === id) {
+        return {
+          ...game,
+          ...edits,
+        };
+      }
+      return game;
+    });
+
+    return db.games.find((game) => game.id === id); // Get the updated game
   },
 };
