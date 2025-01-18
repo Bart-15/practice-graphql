@@ -1,5 +1,5 @@
 import { Author, author, authors } from "./authors.resolver";
-import { game, games, Game } from "./games.resolver";
+import { game, games, Game, GameMutation } from "./games.resolver";
 import { reviews, review, Review } from "./reviews.resolver";
 
 export const resolvers = {
@@ -15,4 +15,8 @@ export const resolvers = {
   Game: Game,
   Review: Review,
   Author: Author,
+
+  Mutation: {
+    ...GameMutation,
+  },
 };
